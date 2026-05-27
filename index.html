@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sky">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>SORA · celestial garment · slow ritual</title>
+  <!-- Typography: airy serif + clean sans -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* SORA — sky, celestial, quiet */
+    :root {
+      --bg: #101214;
+      --surface: #191d21;
+      --surface-elevated: #2a2f35;
+      --text: #f0f2f5;
+      --text-soft: #b8c0c8;
+      --text-muted: #646f7a;
+      --accent: #7e8a8e;
+      --accent-glow: #aebcc4;
+      --accent-deep: #5e6c72;
+      --accent-subtle: #2d353b;
+      --border-light: #3e464d;
+      --shadow-sm: 0 18px 28px -14px rgba(0,0,0,0.6);
+      --shadow-lg: 0 32px 48px -18px rgba(0,0,0,0.85);
+      --transition: 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+      --radius-card: 28px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-elevated: #fcfdff;
+      --text: #2c3138;
+      --text-soft: #8e9aa6;
+      --text-muted: #dce3e9;
+      --accent: #8c9aa0;
+      --accent-glow: #b8c6ce;
+      --accent-deep: #6e7e86;
+      --accent-subtle: #eef2f5;
+      --border-light: #e2e8ed;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      scroll-behavior: smooth;
+      font-weight: 400;
+      line-height: 1.48;
+      letter-spacing: -0.2px;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--surface-elevated); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-glow); border-radius: 12px; }
+
+    /* header — celestial drift */
+    .sora-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(16, 18, 20, 0.82);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(126, 138, 142, 0.3);
+      transition: var(--transition);
+    }
+    [data-theme="light"] .sora-header {
+      background: rgba(245, 247, 250, 0.88);
+    }
+
+    .nav-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.85rem 2.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      color: var(--accent-glow);
+      font-style: italic;
+    }
+    .brand span {
+      font-weight: 400;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--text-soft);
+      font-style: normal;
+      margin-left: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 3px;
+    }
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: 0.25s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--accent-glow); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--accent-glow);
+      transition: 0.25s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    .utility-actions {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    #themeToggle {
+      background: var(--accent-subtle);
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--text);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    #themeToggle:hover { background: var(--accent-glow); color: #141c20; transform: rotate(6deg);}
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-subtle);
+      padding: 0.3rem 1rem 0.3rem 0.9rem;
+      border-radius: 60px;
+      transition: 0.2s;
+    }
+    .cart-icon:hover { background: var(--accent); color: #141c20; transform: scale(0.97);}
+    .cart-count {
+      background: var(--accent-glow);
+      color: #141c20;
+      font-weight: 800;
+      font-size: 0.6rem;
+      border-radius: 40px;
+      padding: 0 6px;
+      min-width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* hero — sky landscape */
+    .hero-sora {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 30% 35%;
+    }
+    .hero-sora::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.35) 75%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+      padding: 0 6%;
+    }
+    .hero-sub {
+      font-size: 0.55rem;
+      letter-spacing: 6px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent-glow);
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(6px);
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      border-radius: 80px;
+    }
+    .hero-main-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(4.5rem, 14vw, 9rem);
+      font-weight: 400;
+      line-height: 0.92;
+      margin-bottom: 0.8rem;
+      color: #f0f2f5;
+      font-style: italic;
+      letter-spacing: -3px;
+    }
+    .hero-offer {
+      font-size: 0.7rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(6px);
+      padding: 0.45rem 1.3rem;
+      border-left: 3px solid var(--accent-glow);
+      border-radius: 0 32px 32px 0;
+    }
+
+    .btn-primary {
+      background: var(--accent-glow);
+      border: none;
+      padding: 0.9rem 2.8rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+      color: #1a201f;
+      border-radius: 100px;
+    }
+    .btn-primary:hover {
+      background: var(--accent-deep);
+      color: #fff8f0;
+      transform: translateY(-3px);
+      box-shadow: 0 18px 28px -12px black;
+    }
+
+    .collection-badge {
+      max-width: 1440px;
+      margin: 4rem auto 1rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      border-bottom: 1px dashed var(--border-light);
+      padding-bottom: 0.7rem;
+    }
+    .collection-badge h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      font-style: italic;
+    }
+    .collection-badge p {
+      color: var(--accent-glow);
+      background: var(--accent-subtle);
+      padding: 0.2rem 1rem;
+      border-radius: 60px;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+
+    /* product grid — organic cards */
+    .grid-shop {
+      max-width: 1440px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-tile {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+    .product-tile:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); border-color: var(--accent-glow); background: var(--surface-elevated);}
+    .tile-img {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: var(--surface-elevated);
+    }
+    .tile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.2, 0.95, 0.4, 1.05);
+    }
+    .product-tile:hover .tile-img img { transform: scale(1.05); }
+    .quick-add {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, #131a20e6, transparent);
+      padding: 1rem;
+      opacity: 0;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .product-tile:hover .quick-add { opacity: 1; }
+    .quick-add button {
+      background: var(--accent-glow);
+      border: none;
+      width: 86%;
+      padding: 0.7rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #191f20;
+    }
+    .quick-add button:hover { background: #fffdf8; transform: scale(0.97);}
+    .product-info {
+      padding: 1rem 1rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .product-details h4 {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--accent-glow);
+    }
+    .product-details h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+    .price-block { text-align: right; }
+    .current-price { font-weight: 700; font-size: 1rem; }
+    .old-price { font-size: 0.65rem; text-decoration: line-through; color: var(--text-muted); margin-left: 5px; }
+
+    /* CART SIDEBAR — celestial vessel */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.94);
+      backdrop-filter: blur(24px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.25s;
+    }
+    .cart-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 540px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      transform: translateX(100%);
+      transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1);
+      display: flex;
+      flex-direction: column;
+      border-radius: 36px 0 0 36px;
+      box-shadow: -18px 0 48px rgba(0,0,0,0.8);
+    }
+    .cart-overlay.active .cart-sidebar {
+      transform: translateX(0);
+    }
+    .cart-header {
+      padding: 1.5rem 1.8rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+    }
+    .cart-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--accent-glow);
+    }
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-soft);
+    }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      background: var(--surface-elevated);
+      border-radius: 28px;
+      padding: 0.9rem;
+      border: 0.5px solid var(--accent-subtle);
+      position: relative;
+    }
+    .cart-item-img {
+      width: 70px;
+      height: 88px;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+    .cart-item-details { flex: 1; }
+    .cart-item-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+    .cart-item-price {
+      font-size: 0.8rem;
+      color: var(--accent-glow);
+      margin-top: 4px;
+    }
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .quantity-btn {
+      background: var(--accent-subtle);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.2s;
+      color: var(--text);
+    }
+    .quantity-btn:hover { background: var(--accent-glow); color: #141c20; }
+    .remove-item {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .remove-item:hover { color: var(--accent-glow);}
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--accent);
+      background: var(--surface);
+      border-radius: 0 0 0 36px;
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .checkout-btn {
+      width: 100%;
+      background: var(--accent-glow);
+      border: none;
+      padding: 1rem;
+      border-radius: 80px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #1a201f;
+    }
+    .checkout-btn:hover { background: var(--accent-deep); color: #fff5ea; transform: scale(0.98);}
+    .empty-cart {
+      text-align: center;
+      color: var(--text-soft);
+      padding: 2rem;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      background: var(--surface-elevated);
+      margin-top: 2.5rem;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--accent-glow);
+    }
+    .footer-locations {
+      font-size: 0.55rem;
+      letter-spacing: 4px;
+      color: var(--text-soft);
+      margin: 0.8rem 0 1rem;
+    }
+
+    @media (max-width: 780px) {
+      .nav-container { flex-direction: column; padding: 0.7rem; }
+      .nav-links { gap: 1rem; justify-content: center; flex-wrap: wrap;}
+      .grid-shop { gap: 1rem; }
+      .cart-sidebar { max-width: 100%; border-radius: 28px 0 0 28px;}
+    }
+
+    /* MODAL — celestial invitation */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(8, 10, 12, 0.97);
+      backdrop-filter: blur(32px);
+      transition: opacity 0.25s ease;
+    }
+    .sora-modal {
+      background: var(--surface);
+      max-width: 540px;
+      width: 100%;
+      border: 1px solid var(--accent-glow);
+      border-radius: 64px 40px 64px 40px;
+      padding: 2.4rem 1.8rem 2.6rem;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 48px 80px rgba(0,0,0,0.85);
+    }
+    .modal-close-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1.4rem;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .modal-icon-badge {
+      width: 70px;
+      height: 70px;
+      background: rgba(126, 138, 142, 0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      border-radius: 100px;
+      border: 1px solid var(--accent-glow);
+      color: var(--accent-glow);
+    }
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      color: var(--accent-glow);
+      margin-bottom: 0.4rem;
+      letter-spacing: -1px;
+      font-style: italic;
+    }
+    .modal-description {
+      color: var(--text-soft);
+      line-height: 1.45;
+      font-size: 0.85rem;
+      margin: 0.8rem 0;
+    }
+    .modal-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .btn-modal-primary {
+      background: var(--accent-glow);
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      color: #1a201f;
+    }
+    .btn-modal-secondary {
+      background: transparent;
+      border: 1px solid var(--accent-glow);
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .modal-fade-out { opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBJZ7C7VV0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SBJZ7C7VV0');
+  </script>
+</head>
+<body>
+
+<!-- ENTRY MODAL - SORA INVITATION -->
+<div id="entryModal" class="modal-overlay">
+  <div class="sora-modal">
+    <button id="closeModalBtn" class="modal-close-icon"><i class="fas fa-cloud-moon"></i></button>
+    <div class="modal-icon-badge"><i class="fas fa-feather-alt"></i></div>
+    <h2 class="modal-title">SORA</h2>
+    <p class="modal-description">Sky threads, quiet hands, ritual form. Each garment is a slow current — shaped by patience, worn with presence. Enter the atelier.</p>
+    <div class="modal-buttons">
+      <button id="enterBtn" class="btn-modal-primary">ENTER SORA</button>
+      <button id="laterBtn" class="btn-modal-secondary">WANDER LATER</button>
+    </div>
+  </div>
+</div>
+
+<header class="sora-header">
+  <div class="nav-container">
+    <div class="brand">SORA<span> · sky atelier</span></div>
+    <nav class="nav-links">
+      <a href="#shop">WIND</a>
+      <a href="#shop">CLOUD</a>
+      <a href="#shop">STAR</a>
+      <a href="#">RITUAL</a>
+    </nav>
+    <div class="utility-actions">
+      <button id="themeToggle">🌙</button>
+      <div class="cart-icon" id="cartIcon">
+        <i class="fas fa-cloud"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-sora">
+    <div class="hero-content">
+      <div class="hero-sub">CELESTIAL · SILENT · SLOW</div>
+      <h1 class="hero-main-title">SORA</h1>
+      <div class="hero-offer">first drift: <strong>15% off</strong> your first celestial garment</div>
+      <a href="#shop" class="btn-primary">DISCOVER RITUAL →</a>
+    </div>
+  </section>
+
+  <div class="collection-badge" id="shop">
+    <h2>Wind & Cloud · Silent Forms</h2>
+    <p>14 limited vessels</p>
+  </div>
+
+  <div class="grid-shop" id="productGrid"></div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">SORA</div>
+    <div class="footer-locations">NORWAY · JAPAN · SWITZERLAND · NEW ZEALAND</div>
+    <p class="copyright" style="font-size:0.55rem; opacity:0.7;">© 2026 SORA — grown in silence, woven by sky.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div id="cartOverlay" class="cart-overlay">
+  <div class="cart-sidebar">
+    <div class="cart-header">
+      <h3>SORA VESSEL</h3>
+      <button class="close-cart" id="closeCartBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer">
+      <div class="empty-cart">Your vessel is still.<br>Add celestial forms.</div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total">
+        <span>Total (USD)</span>
+        <span id="cartTotalPrice">$0</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">☁️ SILENT CHECKOUT</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // SORA COLLECTION — celestial pieces
+  const products = [
+    { id: 1, name: "Sky Tunic", category: "TOPS", original: 495, discountPrice: 420, img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=687&auto=format&fit=crop", alt: "tunic" },
+    { id: 2, name: "Raw Shirt", category: "SHIRTING", original: 445, discountPrice: 378, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=2070&auto=format&fit=crop", alt: "shirt" },
+    { id: 3, name: "Silent Gown", category: "EVENING", original: 2590, discountPrice: 2201, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=687&auto=format&fit=crop", alt: "gown" },
+    { id: 4, name: "Stone Trouser", category: "BOTTOMS", original: 560, discountPrice: 476, img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop", alt: "pants" },
+    { id: 5, name: "Wool Shroud", category: "KNITWEAR", original: 725, discountPrice: 616, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=764&auto=format&fit=crop", alt: "knit" },
+    { id: 6, name: "Ember Coat", category: "OUTERWEAR", original: 1880, discountPrice: 1598, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop", alt: "coat" },
+    { id: 7, name: "Haze Skirt", category: "SKIRTS", original: 410, discountPrice: 348, img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=687&auto=format&fit=crop", alt: "skirt" },
+    { id: 8, name: "Dune Mantle", category: "LEATHER", original: 1990, discountPrice: 1691, img: "https://plus.unsplash.com/premium_photo-1661313817350-1fa759c43a3b?q=80&w=1217&auto=format&fit=crop", alt: "jacket" },
+    { id: 9, name: "Sora Corset", category: "TOPS", original: 455, discountPrice: 386, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=688&auto=format&fit=crop", alt: "corset" },
+    { id: 10, name: "Fossil Denim", category: "DENIM", original: 640, discountPrice: 544, img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600&auto=format&fit=crop", alt: "denim" },
+    { id: 11, name: "Sora Gown", category: "EVENING", original: 2950, discountPrice: 2507, img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=687&auto=format&fit=crop", alt: "gown" },
+    { id: 12, name: "Mineral Wrap", category: "LAYERING", original: 515, discountPrice: 437, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop", alt: "vest" },
+    { id: 13, name: "Shale Shirt", category: "SHIRTING", original: 460, discountPrice: 391, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=2070&auto=format&fit=crop", alt: "slate" },
+    { id: 14, name: "Canyon Form", category: "BOTTOMS", original: 590, discountPrice: 501, img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop", alt: "canyon" }
+  ];
+
+  let cart = [];
+
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartIcon = document.getElementById('cartIcon');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+  const cartItemsContainer = document.getElementById('cartItemsContainer');
+  const cartFooter = document.getElementById('cartFooter');
+  const cartTotalPriceSpan = document.getElementById('cartTotalPrice');
+  const cartCountSpan = document.getElementById('cartCount');
+
+  function saveCart() { localStorage.setItem('SORACart', JSON.stringify(cart)); }
+  function loadCart() { const saved = localStorage.getItem('SORACart'); if (saved) { cart = JSON.parse(saved); } renderCartUI(); updateCartCount(); }
+  function updateCartCount() { cartCountSpan.innerText = cart.reduce((sum,i)=>sum+i.quantity,0); }
+
+  function renderCartUI() {
+    if (!cartItemsContainer) return;
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = '<div class="empty-cart">Your vessel is still.<br>Add celestial forms.</div>';
+      cartFooter.style.display = 'none';
+      updateCartCount(); saveCart(); return;
+    }
+    cartFooter.style.display = 'block';
+    let html = ''; let total = 0;
+    cart.forEach(item => {
+      total += item.price * item.quantity;
+      html += `<div class="cart-item" data-id="${item.id}">
+          <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+            <div class="cart-item-quantity">
+              <button class="quantity-btn dec-qty" data-id="${item.id}">-</button>
+              <span class="cart-item-qty">${item.quantity}</span>
+              <button class="quantity-btn inc-qty" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="remove-item" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+        </div>`;
+    });
+    cartItemsContainer.innerHTML = html;
+    cartTotalPriceSpan.innerText = `$${total.toLocaleString()}`;
+    document.querySelectorAll('.dec-qty').forEach(btn => btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), -1)));
+    document.querySelectorAll('.inc-qty').forEach(btn => btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), 1)));
+    document.querySelectorAll('.remove-item').forEach(btn => btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id))));
+    updateCartCount(); saveCart();
+  }
+  function updateQuantity(pid, delta) {
+    const idx = cart.findIndex(i=>i.id===pid);
+    if(idx!==-1){ const nq = cart[idx].quantity+delta; if(nq<=0) cart.splice(idx,1); else cart[idx].quantity = nq; renderCartUI(); }
+  }
+  function removeFromCart(pid){ cart = cart.filter(i=>i.id!==pid); renderCartUI(); }
+  function addToCart(pid){
+    const prod = products.find(p=>p.id===pid);
+    if(!prod) return;
+    const existing = cart.find(i=>i.id===pid);
+    if(existing) existing.quantity+=1;
+    else cart.push({id:prod.id, name:prod.name, price:prod.discountPrice, quantity:1, img:prod.img});
+    renderCartUI();
+    const btn = document.querySelector(`.add-btn-${pid}`);
+    if(btn){ let old = btn.innerText; btn.innerText="✓ GATHERED"; setTimeout(()=>btn.innerText=old,700);}
+    cartOverlay.classList.add('active');
+  }
+
+  function renderProducts() {
+    const container = document.getElementById('productGrid');
+    if(!container) return;
+    container.innerHTML='';
+    products.forEach(p=>{
+      const disc = Math.round(((p.original-p.discountPrice)/p.original)*100);
+      const card=document.createElement('div');
+      card.className='product-tile';
+      card.innerHTML=`
+        <div class="tile-img">
+          <img src="${p.img}" alt="${p.alt||p.name}" loading="lazy">
+          <div class="quick-add"><button class="add-btn-${p.id} add-to-cart-btn" data-id="${p.id}">✦ ADD TO SORA</button></div>
+        </div>
+        <div class="product-info">
+          <div class="product-details"><h4>${p.category}</h4><h3>${p.name}</h3></div>
+          <div class="price-block"><span class="current-price">$${p.discountPrice.toLocaleString()}</span><span class="old-price">$${p.original.toLocaleString()}</span><span style="font-size:0.55rem;color:var(--accent-glow);display:block;text-align:right;">-${disc}%</span></div>
+        </div>`;
+      container.appendChild(card);
+    });
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn=>btn.addEventListener('click',(e)=>{e.preventDefault(); addToCart(parseInt(btn.dataset.id));}));
+  }
+
+  function initTheme(){
+    const stored = localStorage.getItem('SORA-theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = stored || (systemDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'sky' : 'light');
+    const toggle = document.getElementById('themeToggle');
+    if(toggle) toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+  function toggleThemeUI(){
+    const curr = document.documentElement.getAttribute('data-theme');
+    const next = curr === 'sky' ? 'light' : 'sky';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('SORA-theme', next === 'sky' ? 'dark' : 'light');
+    const toggleBtn = document.getElementById('themeToggle');
+    if(toggleBtn) toggleBtn.textContent = next === 'sky' ? '☀️' : '🌙';
+  }
+
+  const modalDiv = document.getElementById('entryModal');
+  const enterBtn = document.getElementById('enterBtn'), laterBtn = document.getElementById('laterBtn'), closeModalBtn = document.getElementById('closeModalBtn');
+  function closeModalFunc(){ if(modalDiv){ modalDiv.classList.add('modal-fade-out'); setTimeout(()=>modalDiv.style.display='none',200); } }
+  if(enterBtn) enterBtn.addEventListener('click',closeModalFunc);
+  if(laterBtn) laterBtn.addEventListener('click',closeModalFunc);
+  if(closeModalBtn) closeModalBtn.addEventListener('click',closeModalFunc);
+  if(modalDiv) modalDiv.addEventListener('click',(e)=>{ if(e.target===modalDiv) closeModalFunc(); });
+
+  cartIcon?.addEventListener('click',()=>cartOverlay.classList.add('active'));
+  closeCartBtn?.addEventListener('click',()=>cartOverlay.classList.remove('active'));
+  cartOverlay?.addEventListener('click',(e)=>{ if(e.target===cartOverlay) cartOverlay.classList.remove('active'); });
+  document.getElementById('checkoutBtn')?.addEventListener('click',()=>{ alert('Thank you for moving with SORA. Your order honors slow celestial ritual.'); cart=[]; renderCartUI(); cartOverlay.classList.remove('active'); });
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const t=this.getAttribute('href'); if(t==="#") return; const sec=document.querySelector(t); if(sec){ e.preventDefault(); sec.scrollIntoView({behavior:'smooth'}); } }); });
+
+  renderProducts();
+  initTheme();
+  loadCart();
+  document.getElementById('themeToggle')?.addEventListener('click', toggleThemeUI);
+</script>
+</body>
+</html>
